@@ -1,40 +1,65 @@
 <template>
-  <form @submit="sendForm" class="container">
+  <form v-on:submit.prevent="sendForm" class="container">
     <p>
       <label for="codeName">
         Quadri
       </label>
-      <input id="codeName" v-model="codeName" type="text" name="codeName" />
+      <input id="codeName" v-model="state.user.codeName" type="text" name="codeName" />
     </p>
     <p>
       <label for="fullName">
         nom / prénom
       </label>
-      <input id="fullName" v-model="fullName" type="text" name="fullName" />
+      <input id="fullName" v-model="state.user.fullName" type="text" name="fullName" />
     </p>
     <p>
       <label for="status">
         Statut
       </label>
-      <input id="status" v-model="status" type="text" name="status" />
+      <input id="status" v-model="state.user.status" type="text" name="status" />
     </p>
     <p>
       <label for="avatar">
         avatar
       </label>
-      <input id="avatar" v-model="avatar" type="text" name="avatar" />
+      <input id="avatar" v-model="state.user.avatar" type="text" name="avatar" />
     </p>
     <p>
-      <label for="fullName">
-        nom / prénom
-      </label>
-      <input id="fullName" v-model="fullName" type="text" name="fullName" />
+      <SubmitButton />
     </p>
+
   </form>
 </template>
 
 <script>
-export default {};
+import SubmitButton from "./submitButton.vue";
+import { reactive, defineComponent } from "@vue/composition-api";
+
+export default defineComponent({
+  components: {
+    SubmitButton
+  },
+  setup(props, context) {
+    const user = {
+      codeName: "",
+      fullName: "",
+      status: "",
+      avatar: ""
+    };
+    const state = reactive({
+      user
+    });
+    function sendForm() {
+      console.log(state.user);
+      context.emit("createUser", state.user);
+    }
+
+    return {
+      state,
+      sendForm
+    };
+  }
+});
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
     <hr />
     <UserForm />
     <hr />
-    <AddCarButton @addParentCar="changeData" />
+    <ADNButton @send="addCar" label="Ajouter une voiture" />
     <hr />
     <Rating :rating="2 + 2" alt="coolItem" />
     <hr />
@@ -29,7 +29,7 @@
 <script lang="ts">
 import Vue from "vue";
 import IDCard from "./components/IDCard.vue";
-import AddCarButton from "./components/AddCarButton.vue";
+import ADNButton from "./components/ADNButton.vue";
 import Rating from "./components/Rating.vue";
 import UserCard from "./components/UserCard.vue";
 import UserForm from "./components/UserForm.vue";
@@ -43,14 +43,14 @@ export default Vue.extend({
     UserCard,
     Rating,
     UserForm,
-    AddCarButton
+    ADNButton
   },
   setup() {
     const users = ref(data.users); // ref = donnée reactive
     const state = reactive({
       users: data.users
     });
-    function changeData() {
+    function addCar() {
       // change la reactive
       state.users = data.users.map(user => {
         user.fullName = user.fullName + " 🚔";
@@ -68,7 +68,7 @@ export default Vue.extend({
       ...toRefs(state), // soit on expose les refs issues du state (reactive)
       // users, // soit un expose une ref directement
       initialRating: 4,
-      changeData
+      addCar
     };
   }
 });

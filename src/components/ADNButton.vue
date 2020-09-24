@@ -1,16 +1,21 @@
 <template>
-  <button type="button" @click="addCar">Ajouter une voiture</button>
+  <button type="button" @click="send">{{ label }}</button>
 </template>
 
 <script>
 export default {
+  props: {
+    label: {
+      type: String,
+      default: "send"
+    }
+  },
   setup(props, context) {
-    const addCar = () => {
-      console.log("COUCOU");
-      context.emit("addParentCar");
+    const send = () => {
+      context.emit("send");
     };
     return {
-      addCar
+      send
     };
   }
 };

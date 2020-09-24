@@ -5,11 +5,13 @@
     <hr />
     <UserForm />
     <hr />
+    <AddCarButton @addParentCar="changeData" />
+    <hr />
     <Rating :rating="2 + 2" alt="coolItem" />
     <hr />
     <section>
       <h2>User cards</h2>
-      <UserCard v-for="(user, i) in users" :key="i" :user="user" />
+      <UserCard v-for="(user, i) in state.users" :key="i" :user="user" />
     </section>
     <hr />
     <section>
@@ -27,11 +29,12 @@
 <script lang="ts">
 import Vue from "vue";
 import IDCard from "./components/IDCard.vue";
+import AddCarButton from "./components/AddCarButton.vue";
 import Rating from "./components/Rating.vue";
 import UserCard from "./components/UserCard.vue";
 import UserForm from "./components/UserForm.vue";
 import { data } from "./assets/data.js";
-import { ref } from "@vue/composition-api";
+import { reactive, ref, toRefs } from "@vue/composition-api";
 
 export default Vue.extend({
   name: "App",
@@ -39,13 +42,33 @@ export default Vue.extend({
     IDCard,
     UserCard,
     Rating,
-    UserForm
+    UserForm,
+    AddCarButton
   },
   setup() {
-    const users = ref(data.users);
+    const users = ref(data.users); // ref = donnée reactive
+    const state = reactive({
+      users: data.users
+    });
+    function changeData() {
+      // change la reactive
+      state.users = data.users.map(user => {
+        user.fullName = user.fullName + " 🚔";
+        return user;
+      });
+      // change la ref
+      users.value = data.users.map(user => {
+        user.fullName = user.fullName + " 🚔";
+        return user;
+      });
+    }
     return {
-      users,
-      initialRating: 4
+      data,
+      state, // soit on expose le state reatif (reactive)
+      ...toRefs(state), // soit on expose les refs issues du state (reactive)
+      // users, // soit un expose une ref directement
+      initialRating: 4,
+      changeData
     };
   }
 });

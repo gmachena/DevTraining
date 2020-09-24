@@ -1,18 +1,30 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <p>{{ 2 + 1 }}</p>
+    <Rating :rating="2" alt="coolItem" />
+    <IDCard fullName="Armando Maradona" codeName="ARMA" />
+    <IDCard fullName="Armando Maradona" codeName="ARMA" />
+    <IDCard fullName="Armando Maradona" codeName="ARMA" />
+    <IDCard fullName="Armando Maradona" codeName="ARMA" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import IDCard from "./components/IDCard.vue";
+import Rating from "./components/Rating.vue";
 
 export default Vue.extend({
   name: "App",
   components: {
-    HelloWorld
+    IDCard,
+    Rating
+  },
+  setup() {
+    return {
+      initialRating: 4
+    };
   }
 });
 </script>
@@ -25,5 +37,8 @@ export default Vue.extend({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.second {
+  background-color: red;
 }
 </style>
